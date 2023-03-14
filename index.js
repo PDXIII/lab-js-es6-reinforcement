@@ -1,12 +1,17 @@
+import { usersArray } from './data.js';
+
 // ***************************************************************************
 // Iteration 1 - `for...of` loop
 // ***************************************************************************
 
-const getFirstNames = arr => {
+const getFirstNames = (arr) => {
   const userFirstNames = [];
   for (let user of arr) {
     // Your code goes here ...
+    userFirstNames.push(user.firstName);
   }
+
+  console.log(userFirstNames);
 };
 
 getFirstNames(usersArray);
@@ -17,8 +22,14 @@ getFirstNames(usersArray);
 // Iteration 2 - `for...of` loop and ES6 string literals `${}`
 // ***************************************************************************
 
-const getFullNames = arr => {
+const getFullNames = (arr) => {
   // Your code goes here ...
+  const usersFullNames = [];
+  for (let user of arr) {
+    usersFullNames.push(`${user.firstName} ${user.lastName}`);
+  }
+
+  console.log(usersFullNames);
 };
 
 getFullNames(usersArray);
@@ -30,8 +41,14 @@ getFullNames(usersArray);
 // Iteration 3 - ES6 destructuring , for of loop, object literal
 // ***************************************************************************
 
-const getUsersCreditDetails = arr => {
+const getUsersCreditDetails = (arr) => {
   // Your code goes here ...
+  const usersSimple = [];
+  for (let user of arr) {
+    const { firstName, lastName, balance } = user;
+    usersSimple.push({ firstName, lastName, balance });
+  }
+  console.table(usersSimple);
 };
 
 getUsersCreditDetails(usersArray);
@@ -48,8 +65,13 @@ getUsersCreditDetails(usersArray);
 // Iteration 4 - practice `.filter()` method and how to return two elements
 // ***************************************************************************
 
-const genderView = users => {
+const genderView = (users) => {
   // Your code goes here ...
+  const femaleUsers = users.filter((user) => user.gender === 'female');
+  const maleUsers = users.filter((user) => user.gender === 'male');
+
+  console.log({ femaleUsers, maleUsers });
+  return { femaleUsers, maleUsers };
 };
 
 genderView(usersArray);
@@ -65,8 +87,15 @@ genderView(usersArray);
 
 const data = genderView(usersArray);
 
-const genderCount = data => {
+const genderCount = (data) => {
   // Your code goes here ...
+
+  console.log(
+    'Female: ',
+    data.femaleUsers.length,
+    'Male: ',
+    data.maleUsers.length
+  );
 };
 
 genderCount(data);
@@ -78,9 +107,19 @@ genderCount(data);
 // Bonus - Iteration 6
 // ***************************************************************************
 
-const promo20 = users => {
+const promo20 = (users) => {
   // Your code goes here ...
+  const promo = [];
+  for (let user of users) {
+    const { firstName, balance } = user;
+    promo.push(
+      `Dear ${firstName}, since your balance is ${balance}, you are eligible to apply for this awesome credit card.`
+    );
+  }
+  return promo;
 };
+
+console.log(promo20(usersArray));
 
 // expected output:
 // Dear Howard, since your balance is $21,307.75, you are eligible to apply for this awesome credit card.
@@ -90,11 +129,12 @@ const promo20 = users => {
 // Bonus - Iteration 7
 // ***************************************************************************
 
-const addActive = users => {
+const addActive = (users) => {
   // Your code goes here ...
+  return users.filter((user) => user.isActive);
 };
 
-addActive(usersArray);
+console.log(addActive(usersArray));
 // expected output:
 // [
 //    { firstName: 'Kirby',
